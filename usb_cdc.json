@@ -1,0 +1,34 @@
+{
+    "info": {
+        "name": "USB_CDC",
+        "description": "An implementation of the Full Speed (12Mbit/s) USB communications device class",
+        "repo": "https://github.com/ulixxe/usb_cdc",
+        "owner": "ulixxe",
+        "license": "MIT",
+        "author": "ulixxe",
+        "email": "",
+        "version": "v1.0.0",
+        "date": "3-18-2023",
+        "category": "digital",
+        "tags": [
+            "peripheral",
+            "comm",
+            "usb",
+            "cdc"
+        ],
+        "bus": [
+            "generic"
+        ],
+        "type": "soft",
+        "status": "verified",
+        "cell_count": "0",
+        "width": "0.0",
+        "height": "0.0",
+        "technology": "n/a",
+        "clock_freq_mhz": "48",
+        "supply_voltage": [
+            "n/a"
+        ]
+    }
+        
+}
