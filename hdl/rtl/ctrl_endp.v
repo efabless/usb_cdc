@@ -33,58 +33,58 @@ module ctrl_endp
     parameter ENDP_INT = 4'd2)
    (
     // ---- to/from USB_CDC module ---------------------------------
-    input        clk_i,
+    input wire        clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES.
-    input        rstn_i,
+    input wire        rstn_i,
     // While rstn_i is low (active low), the module shall be reset.
-    output       configured_o,
+    output wire       configured_o,
     // While USB_CDC is in configured state, configured_o shall be high.
 
     // ---- to/from SIE module ------------------------------------
-    input        usb_reset_i,
+    input wire        usb_reset_i,
     // While usb_reset_i is high, the module shall be reset.
-    output       usb_en_o,
+    output wire       usb_en_o,
     // While device is in POWERED_STATE and usb_reset_i is low, usb_en_o shall be low.
-    output [6:0] addr_o,
+    output wire [6:0] addr_o,
     // addr_o shall be the device address.
     // addr_o shall be updated at the end of SET_ADDRESS control transfer.
-    output       stall_o,
+    output wire       stall_o,
     // While control pipe is addressed and is in stall state, stall_o shall
     //   be high, otherwise shall be low.
-    output       out_toggle_reset_o,
+    output wire       out_toggle_reset_o,
     // When out_toggle_reset_o is high, data toggle synchronization of
     //   OUT bulk pipe shall be reset to DATA0.
-    output       in_toggle_reset_o,
+    output wire       in_toggle_reset_o,
     // When in_toggle_reset_o is high, data toggle synchronization of
     //   IN bulk pipe shall be reset to DATA0.
-    output [7:0] in_data_o,
+    output wire [7:0] in_data_o,
     // While in_valid_o is high and in_zlp_o is low, in_data_o shall be valid.
-    output       in_zlp_o,
+    output wire       in_zlp_o,
     // While in_req_i is high and IN Control Endpoint have to reply with zero length
     //   packet, IN Control Endpoint shall put both in_zlp_o and in_valid_o high.
-    output       in_valid_o,
+    output wire       in_valid_o,
     // While in_req_i is high and IN Control Endpoint have data or zero length packet
     //   available, IN Control Endpoint shall put in_valid_o high.
-    input        in_req_i,
-    input        in_ready_i,
+    input wire        in_req_i,
+    input wire        in_ready_i,
     // When both in_ready_i and in_valid_o are high, in_data_o or zero length
     //   packet shall be consumed.
     // When in_data_o or zlp is consumed, in_ready_i shall be high only for
     //   one clk_i period.
-    input        setup_i,
+    input wire        setup_i,
     // While last correctly checked PID (USB2.0 8.3.1) is SETUP, setup_i shall
     //   be high, otherwise shall be low.
-    input        in_data_ack_i,
+    input wire        in_data_ack_i,
     // When in_data_ack_i is high and out_ready_i is high, an ACK packet shall be received.
-    input [7:0]  out_data_i,
-    input        out_valid_i,
+    input wire [7:0]  out_data_i,
+    input wire        out_valid_i,
     // While out_valid_i is high, the out_data_i shall be valid and both
     //   out_valid_i and out_data_i shall not change until consumed.
-    input        out_err_i,
+    input wire        out_err_i,
     // When both out_err_i and out_ready_i are high, SIE shall abort the
     //   current packet reception and OUT Control Endpoint shall manage the error
     //   condition.
-    input        out_ready_i
+    input wire        out_ready_i
     // When both out_valid_i and out_ready_i are high, the out_data_i shall
     //   be consumed.
     // When setup_i is high and out_ready_i is high, a new SETUP transaction shall be

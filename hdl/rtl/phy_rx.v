@@ -16,42 +16,42 @@ module phy_rx
   #(parameter BIT_SAMPLES = 'd4)
    (
     // ---- to/from SIE module ------------------------------------
-    output [7:0] rx_data_o,
-    output       rx_valid_o,
+    output wire [7:0] rx_data_o,
+    output wire      rx_valid_o,
     // While a new data byte is shifting in, rx_valid_o shall be high, otherwise
     //   shall be low.
     // When both rx_valid_o and rx_ready_o are high, rx_data_o shall be valid and
     //   shall be consumed by SIE module.
-    output       rx_err_o,
+    output wire      rx_err_o,
     // When both rx_err_o and rx_ready_o are high, PHY_RX module shall abort the
     //   current packet reception and SIE module shall manage the error condition.
-    output       usb_reset_o,
+    output wire       usb_reset_o,
     // When dp_rx_i/dn_rx_i change and stay in SE0 condition for 2.5us, usb_reset_o shall be high.
     // When dp_rx_i/dn_rx_i change from SE0 condition, usb_reset_o shall return low
     //   after being high for at least 330ns.
     // When usb_detach_i is high and a usb detach has started, usb_reset_o shall be high.
-    output       rx_ready_o,
+    output wire       rx_ready_o,
     // rx_ready_o shall be high only for one clk_i period.
     // While rx_valid_o and rx_err_o are both low, rx_ready_o shall be high to signal the
     //   end of packet (EOP).
-    input        clk_i,
+    input wire        clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES.
-    input        rstn_i,
+    input wire        rstn_i,
     // While rstn_i is low (active low), the module shall be reset.
-    input        rx_en_i,
+    input wire        rx_en_i,
     // While rx_en_i is low, the module shall be disabled.
     // When rx_en_i changes from low to high, the module shall start to monitor dp/dn lines
     //   for the start of a new packet.
-    input        usb_detach_i,
+    input wire        usb_detach_i,
     // When usb_detach_i is high, a usb detach shall be requested.
 
     // ---- to/from USB bus ------------------------------------------
-    output       dp_pu_o,
+    output wire       dp_pu_o,
     // While dp_pu_o is high, a 1.5KOhm resistor shall pull-up the dp line.
     // At power-on or when usb_detach_i is high, dp_pu_o shall be low.
     // After TSIGATT time from power-on or from usb_detach_i change to low, dp_pu_o shall be high.
-    input        dp_rx_i,
-    input        dn_rx_i
+    input wire        dp_rx_i,
+    input wire        dn_rx_i
     );
 
    function integer ceil_log2;

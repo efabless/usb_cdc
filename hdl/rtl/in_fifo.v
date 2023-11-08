@@ -12,39 +12,39 @@ module in_fifo
     parameter APP_CLK_RATIO = 'd4)
    (
     // ---- to/from Application ------------------------------------
-    input        app_clk_i,
-    input        app_rstn_i,
+    input wire        app_clk_i,
+    input wire        app_rstn_i,
     // While app_rstn_i is low (active low), the app_clk_i'ed registers shall be reset
-    input [7:0]  app_in_data_i,
-    input        app_in_valid_i,
+    input wire [7:0]  app_in_data_i,
+    input wire        app_in_valid_i,
     // While app_in_valid_i is high, app_in_data_i shall be valid.
-    output       app_in_ready_o,
+    output wire       app_in_ready_o,
     // When both app_in_ready_o and app_in_valid_i are high, app_in_data_i shall
     //   be consumed.
 
     // ---- from top module ---------------------------------------
-    input        clk_i,
+    input wire        clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES
-    input        rstn_i,
+    input wire        rstn_i,
     // While rstn_i is low (active low), the clk_i'ed registers shall be reset
-    output       in_empty_o,
-    output       in_full_o,
+    output wire       in_empty_o,
+    output wire       in_full_o,
 
     // ---- to/from SIE module ------------------------------------
-    output [7:0] in_data_o,
+    output wire [7:0] in_data_o,
     // While in_valid_o is high, in_data_o shall be valid.
-    output       in_valid_o,
+    output wire       in_valid_o,
     // While in_req_i is high and IN FIFO is not empty, in_valid_o shall be high.
-    input        in_req_i,
+    input wire        in_req_i,
     // When a new IN transaction is requested, in_req_i shall change from low to high.
     // When a IN transaction ends, in_req_i shall change from high to low.
-    input        in_ready_i,
+    input wire        in_ready_i,
     // When both in_ready_i and in_valid_o are high, in_data_o shall be consumed.
     // When in_data_o is consumed, in_ready_i shall be high only for
     //   one clk_i period.
-    input        in_data_ack_i,
-    input        out_valid_i,
-    input        out_ready_i
+    input wire        in_data_ack_i,
+    input wire        out_valid_i,
+    input wire        out_ready_i
     // When in_data_ack_i is high and out_ready_i is high, an ACK packet shall be received.
     );
 

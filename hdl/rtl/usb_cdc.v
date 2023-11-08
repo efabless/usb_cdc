@@ -14,38 +14,38 @@ module usb_cdc
     parameter USE_APP_CLK = 0,
     parameter APP_CLK_RATIO = 'd4)
    (
-    input         clk_i,
+    input wire         clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES
-    input         rstn_i,
+    input wire         rstn_i,
     // While rstn_i is low (active low), the module shall be reset
 
     // ---- to/from Application ------------------------------------
-    input         app_clk_i,
-    output [7:0]  out_data_o,
-    output        out_valid_o,
+    input wire         app_clk_i,
+    output wire [7:0]  out_data_o,
+    output wire        out_valid_o,
     // While out_valid_o is high, the out_data_o shall be valid and both
     //   out_valid_o and out_data_o shall not change until consumed.
-    input         out_ready_i,
+    input wire         out_ready_i,
     // When both out_valid_o and out_ready_i are high, the out_data_o shall
     //   be consumed.
-    input [7:0]   in_data_i,
-    input         in_valid_i,
+    input wire [7:0]   in_data_i,
+    input wire         in_valid_i,
     // While in_valid_i is high, in_data_i shall be valid.
-    output        in_ready_o,
+    output wire        in_ready_o,
     // When both in_ready_o and in_valid_i are high, in_data_i shall
     //   be consumed.
-    output [10:0] frame_o,
+    output wire [10:0] frame_o,
     // frame_o shall be last recognized USB frame number sent by USB host.
-    output        configured_o,
+    output wire        configured_o,
     // While USB_CDC is in configured state, configured_o shall be high.
 
     // ---- to USB bus physical transmitters/receivers --------------
-    output        dp_pu_o,
-    output        tx_en_o,
-    output        dp_tx_o,
-    output        dn_tx_o,
-    input         dp_rx_i,
-    input         dn_rx_i
+    output wire        dp_pu_o,
+    output wire        tx_en_o,
+    output wire        dp_tx_o,
+    output wire        dn_tx_o,
+    input wire         dp_rx_i,
+    input wire         dn_rx_i
     );
 
    localparam    CTRL_MAXPACKETSIZE = 'd8;

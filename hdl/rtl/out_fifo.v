@@ -12,40 +12,40 @@ module out_fifo
     parameter APP_CLK_RATIO = 'd4)
    (
     // ---- to/from Application ------------------------------------
-    input        app_clk_i,
-    input        app_rstn_i,
+    input wire        app_clk_i,
+    input wire        app_rstn_i,
     // While app_rstn_i is low (active low), the app_clk_i'ed registers shall be reset
-    output [7:0] app_out_data_o,
-    output       app_out_valid_o,
+    output wire [7:0] app_out_data_o,
+    output wire       app_out_valid_o,
     // While app_out_valid_o is high, the app_out_data_o shall be valid and both
     //   app_out_valid_o and app_out_data_o shall not change until consumed.
-    input        app_out_ready_i,
+    input wire        app_out_ready_i,
     // When both app_out_valid_o and app_out_ready_i are high, the app_out_data_o shall
     //   be consumed.
 
     // ---- from top module ---------------------------------------
-    input        clk_i,
+    input wire        clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES
-    input        rstn_i,
+    input wire        rstn_i,
     // While rstn_i is low (active low), the clk_i'ed registers shall be reset
-    output       out_empty_o,
-    output       out_full_o,
+    output wire       out_empty_o,
+    output wire       out_full_o,
 
     // ---- to/from SIE module ------------------------------------
-    output       out_nak_o,
+    output wire       out_nak_o,
     // While out_valid_i is high, when OUT FIFO is full, out_nak_o shall be
     //   latched high.
     // While out_nak_o is latched high and OUT FIFO is not full, when a new
     //   OUT transaction starts, out_nak_o shall return low.
-    input [7:0]  out_data_i,
-    input        out_valid_i,
+    input wire [7:0]  out_data_i,
+    input wire        out_valid_i,
     // While out_valid_i is high, the out_data_i shall be valid and both
     //   out_valid_i and out_data_i shall not change until consumed.
-    input        out_err_i,
+    input wire        out_err_i,
     // When both out_err_i and out_ready_i are high, SIE shall abort the
     //   current packet reception and OUT FIFO shall manage the error
     //   condition.
-    input        out_ready_i
+    input wire        out_ready_i
     // When both out_valid_i and out_ready_i are high, the out_data_i shall
     //   be consumed.
     // When out_valid_i and out_err_i are low and out_ready_i is high, the

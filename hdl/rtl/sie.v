@@ -22,32 +22,32 @@ module sie
     parameter BIT_SAMPLES = 'd4)
    (
     // ---- to/from USB_CDC module ------------------------------------
-    output        usb_reset_o,
+    output wire        usb_reset_o,
     // When dp_rx_i/dn_rx_i change and stay in SE0 condition for 2.5us, usb_reset_o shall be high.
     // When dp_rx_i/dn_rx_i change from SE0 condition, usb_reset_o shall return low
     //   after being high for at least 330ns.
     // When usb_detach_i is high and a usb detach has started, usb_reset_o shall be high.
-    output [3:0]  endp_o,
+    output wire [3:0]  endp_o,
     // endp_o shall be last recognized endpoint address and shall be
     //   updated at the end of next valid token packet.
-    output [10:0] frame_o,
+    output wire [10:0] frame_o,
     // frame_o shall be last recognized frame number and shall be
     //   updated at the end of next valid Start-of-Frame token packet.
-    input         clk_i,
+    input wire         clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES.
-    input         rstn_i,
+    input wire         rstn_i,
     // While rstn_i is low (active low), the module shall be reset.
 
     // ---- to/from OUT Endpoints ------------------------------------
-    output [7:0]  out_data_o,
-    output        out_valid_o,
+    output wire [7:0]  out_data_o,
+    output wire        out_valid_o,
     // While out_valid_o is high, the out_data_o shall be valid and both
     //   out_valid_o and out_data_o shall not change until consumed.
-    output        out_err_o,
+    output wire        out_err_o,
     // When both out_err_o and out_ready_o are high, SIE shall abort the
     //   current packet reception and OUT Endpoints shall manage the error
     //   condition.
-    output        out_ready_o,
+    output wire        out_ready_o,
     // When both out_valid_o and out_ready_o are high, the out_data_o shall
     //   be consumed.
     // When setup_o is high and out_ready_o is high, a new SETUP transaction shall be
@@ -55,62 +55,62 @@ module sie
     // When setup_o, in_data_ack_o, out_valid_o and out_err_o are low and out_ready_o
     //   is high, the on-going OUT transaction shall end.
     // out_ready_o shall be high only for one clk_i period.
-    input         out_nak_i,
+    input wire         out_nak_i,
     // When out_nak_i is high at the end of an OUT transaction, SIE shall send a NAK
     //   packet.
 
     // ---- to/from IN Endpoints -------------------------------------
-    output        in_req_o,
-    output        in_ready_o,
+    output wire        in_req_o,
+    output wire        in_ready_o,
     // When both in_ready_o and in_valid_i are high, in_data_i or zero length
     //   packet shall be consumed.
     // When in_data_i or zlp is consumed, in_ready_o shall be high only for
     //   one clk_i period.
-    output        in_data_ack_o,
+    output wire        in_data_ack_o,
     // When in_data_ack_o is high and out_ready_o is high, an ACK packet shall be received.
-    input         in_valid_i,
+    input wire         in_valid_i,
     // While in_req_o is high and IN Endpoints have data or zero length packet
     //   available, IN Endpoints shall put in_valid_i high.
-    input [7:0]   in_data_i,
+    input wire [7:0]   in_data_i,
     // While in_valid_i is high and in_zlp_i is low, in_data_i shall be valid.
-    input         in_zlp_i,
+    input wire         in_zlp_i,
     // While in_req_o is high and IN Endpoints have zero length packet available,
     //   IN Endpoints shall put both in_zlp_i and in_valid_i high.
-    input         in_nak_i,
+    input wire         in_nak_i,
     // When in_nak_i is high at the start of an IN transaction, SIE shall send a NAK
     //   packet.
 
     // ---- to/from CONTROL Endpoint ---------------------------------
-    output        setup_o,
+    output wire        setup_o,
     // While last correctly checked PID (USB2.0 8.3.1) is SETUP, setup_o shall
     //   be high, otherwise shall be low.
-    input         usb_en_i,
+    input wire         usb_en_i,
     // While usb_en_i is low, the phy_rx module shall be disabled.
-    input         usb_detach_i,
+    input wire         usb_detach_i,
     // When usb_detach_i is high, a usb detach shall be requested.
-    input [6:0]   addr_i,
+    input wire [6:0]   addr_i,
     // addr_i shall be the device address.
     // addr_i shall be updated at the end of SET_ADDRESS control transfer.
-    input         stall_i,
+    input wire         stall_i,
     // While control pipe is addressed and is in stall state, stall_i shall
     //   be high, otherwise shall be low.
-    input         in_toggle_reset_i,
+    input wire         in_toggle_reset_i,
     // When in_toggle_reset_i is high, data toggle synchronization of
     //   IN bulk pipe shall be reset to DATA0.
-    input         out_toggle_reset_i,
+    input wire         out_toggle_reset_i,
     // When out_toggle_reset_i is high, data toggle synchronization of
     //   OUT bulk pipe shall be reset to DATA0.
 
     // ---- to/from USB bus physical transmitters/receivers ----------
-    output        dp_pu_o,
+    output wire        dp_pu_o,
     // While dp_pu_o is high, a 1.5KOhm resistor shall pull-up dp line.
     // At power-on, dp_pu_o shall be low.
     // After TSIGATT time from power-on, dp_pu_o shall be high.
-    output        tx_en_o,
-    output        dp_tx_o,
-    output        dn_tx_o,
-    input         dp_rx_i,
-    input         dn_rx_i
+    output wire        tx_en_o,
+    output wire        dp_tx_o,
+    output wire        dn_tx_o,
+    input wire         dp_rx_i,
+    input wire         dn_rx_i
     );
 
    function integer ceil_log2;

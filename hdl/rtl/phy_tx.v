@@ -14,25 +14,25 @@ module phy_tx
   #(parameter BIT_SAMPLES = 'd4)
    (
     // ---- to USB bus physical transmitters ----------------------
-    output      tx_en_o,
-    output      dp_tx_o,
-    output      dn_tx_o,
+    output wire      tx_en_o,
+    output wire      dp_tx_o,
+    output wire      dn_tx_o,
     // dp_tx_o and dn_tx_o shall have a negligible timing mismatch
     //   (< clk_i period /2).
 
     // ---- to/from SIE module ------------------------------------
-    output      tx_ready_o,
+    output wire      tx_ready_o,
     // When both tx_valid_i and tx_ready_o are high, the 8-bit tx_data_i shall be consumed.
     // When tx_data_i is consumed, tx_ready_o shall be high only for one clk_i period.
-    input       clk_i,
+    input wire       clk_i,
     // clk_i clock shall have a frequency of 12MHz*BIT_SAMPLES.
-    input       rstn_i,
+    input wire       rstn_i,
     // While rstn_i is low (active low), the module shall be reset.
-    input       tx_valid_i,
+    input wire       tx_valid_i,
     // When tx_valid_i changes from low to high, PHY_TX shall start a
     //   new packet transmission as soon as possible (USB2.0 7.1.18.1).
     // When the last packet byte is consumed, tx_valid_i shall return low.
-    input [7:0] tx_data_i
+    input wire [7:0] tx_data_i
     // While tx_valid_i is high, the tx_data_i shall be valid and both
     //   tx_valid_i and tx_data_i shall not change until consumed.
     );
